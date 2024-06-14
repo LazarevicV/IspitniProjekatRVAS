@@ -1,0 +1,6 @@
+@IspitniProjekatRVAS_HostAddress = http://localhost:5212
+
+GET {{IspitniProjekatRVAS_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
