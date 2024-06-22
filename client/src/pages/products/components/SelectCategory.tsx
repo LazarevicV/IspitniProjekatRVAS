@@ -13,21 +13,23 @@ const SelectCategory: React.FC<{
   onChange: (value: string) => void;
 }> = ({ className, categories, onChange }) => {
   return (
-    <Select defaultValue="all" onValueChange={onChange}>
-      <SelectTrigger className={`w-[180px] ${className}`}>
-        <SelectValue placeholder="Select category" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectItem key="all" value="all">
-          Select All
-        </SelectItem>
-        {categories.map((category) => (
-          <SelectItem key={category.id} value={category.title}>
-            {category.title}
+    <div>
+      <Select defaultValue="all" onValueChange={onChange}>
+        <SelectTrigger className={`w-[180px] ${className}`}>
+          <SelectValue placeholder="Select category" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem key="all" value="all">
+            Select All
           </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
+          {categories.map((category) => (
+            <SelectItem key={category.id} value={category.title}>
+              {category.title}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </div>
   );
 };
 

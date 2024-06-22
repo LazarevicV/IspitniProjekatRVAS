@@ -6,11 +6,13 @@ import { cn } from "@/lib/utils";
 import { SelectCategory } from "./components/SelectCategory";
 import { ProductList } from "./components/ProductList";
 import { CategoryType, ProductType } from "@/lib/types";
+import SearchProduct from "./components/SearchProduct";
 
 const ProductPage: React.FC<{ className?: string }> = ({ className }) => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(
     "all"
   );
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
   // Fetch categories
   const {
@@ -40,23 +42,32 @@ const ProductPage: React.FC<{ className?: string }> = ({ className }) => {
     setSelectedCategory(value === "all" ? null : value);
   };
 
-  // Filter products based on selected category or show all if none selected
-  const filteredProducts =
-    selectedCategory && selectedCategory !== "all"
-      ? products?.filter((product) => {
-          const category = categories?.find(
-            (cat) => cat.title === selectedCategory
-          );
-          return category && product.categoryId === category.id;
-        })
-      : products;
+  // Filter products based on selected category and search term
+  const filteredProducts = products?.filter((product) => {
+    // Check if the product matches the selected category filter
+    const categoryMatch =
+      selectedCategory === null ||
+      selectedCategory === "all" ||
+      categories?.find((cat) => cat.title === selectedCategory)?.id ===
+        product.categoryId;
+
+    // Check if the product matches the search term filter
+    const searchMatch = product.title
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+
+    return categoryMatch && searchMatch;
+  });
 
   return (
     <div className={cn("max-w-4xl mx-auto flex flex-col gap-4", className)}>
-      <SelectCategory
-        categories={categories || []}
-        onChange={handleCategorySelect}
-      />
+      <div className="flex justify-start gap-2">
+        <SelectCategory
+          categories={categories || []}
+          onChange={handleCategorySelect}
+        />
+        <SearchProduct searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      </div>
       <ProductList products={filteredProducts || []} />
     </div>
   );
