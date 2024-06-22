@@ -26,7 +26,7 @@ export const Route = createRootRoute({
     return (
       <>
         <QueryClientProvider client={queryClient}>
-          <div className="flex w-full flex-col">
+          <div className="flex w-full flex-col mb-2">
             <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
               <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
                 <Navigation />
@@ -82,30 +82,6 @@ const Navigation = () => {
       <Link to="/" className="[&.active]:font-bold">
         Home
       </Link>{" "}
-      {isAuth && (
-        <>
-          <Link
-            to="/courses"
-            className="[&.active]:font-bold"
-            search={{
-              filter: "",
-              search: "",
-            }}
-          >
-            Courses
-          </Link>{" "}
-          <Link
-            to="/schools"
-            className="[&.active]:font-bold"
-            search={{ search: "" }}
-          >
-            Schools
-          </Link>
-          <Link to="/roadmaps" className="[&.active]:font-bold">
-            Roadmaps
-          </Link>
-        </>
-      )}
       {user?.role === "admin" && (
         <Link to="/admin" className="[&.active]:font-bold">
           Admin
