@@ -32,22 +32,61 @@ namespace IspitniProjekatRVAS.Controllers
             return "value";
         }
 
-        // POST api/<CategoryController>
+        // POST: api/Categories
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Post([FromBody] CategoryInsertDTO model)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            await _categoryService.CreateCategoryAsync(model.Title);
+
+            return Ok();
         }
 
-        // PUT api/<CategoryController>/5
+        public class CategoryInsertDTO
+        {
+            public string Title { get; set; }
+        }
+
+        // PUT api/Categories/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> Put(int id, [FromBody] UpdateCategoryDTO updateCategory)
         {
+            if (string.IsNullOrWhiteSpace(updateCategory.Title))
+            {
+                return BadRequest("Title is required.");
+            }
+
+            var result = await _categoryService.UpdateCategoryTitleAsync(id, updateCategory.Title);
+
+            if (result)
+            {
+                return Ok();
+            }
+
+            return NotFound();
         }
 
-        // DELETE api/<CategoryController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        public class UpdateCategoryDTO
         {
+            public string Title { get; set; }
+        }
+
+        // DELETE api/products/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var result = await _categoryService.DeleteCategoryAsync(id);
+            
+            if (result)
+            {
+                return Ok();
+            }
+
+            return NotFound(); // 404 Not Found
         }
     }
 }
