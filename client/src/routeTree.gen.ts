@@ -11,15 +11,27 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as ReviewsImport } from './routes/reviews'
 import { Route as RegisterImport } from './routes/register'
+import { Route as ProductsImport } from './routes/products'
 import { Route as LoginImport } from './routes/login'
 import { Route as AdminImport } from './routes/admin'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
 
+const ReviewsRoute = ReviewsImport.update({
+  path: '/reviews',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const RegisterRoute = RegisterImport.update({
   path: '/register',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ProductsRoute = ProductsImport.update({
+  path: '/products',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -63,11 +75,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginImport
       parentRoute: typeof rootRoute
     }
+    '/products': {
+      id: '/products'
+      path: '/products'
+      fullPath: '/products'
+      preLoaderRoute: typeof ProductsImport
+      parentRoute: typeof rootRoute
+    }
     '/register': {
       id: '/register'
       path: '/register'
       fullPath: '/register'
       preLoaderRoute: typeof RegisterImport
+      parentRoute: typeof rootRoute
+    }
+    '/reviews': {
+      id: '/reviews'
+      path: '/reviews'
+      fullPath: '/reviews'
+      preLoaderRoute: typeof ReviewsImport
       parentRoute: typeof rootRoute
     }
   }
@@ -79,7 +105,9 @@ export const routeTree = rootRoute.addChildren({
   IndexRoute,
   AdminRoute,
   LoginRoute,
+  ProductsRoute,
   RegisterRoute,
+  ReviewsRoute,
 })
 
 /* prettier-ignore-end */
@@ -93,7 +121,9 @@ export const routeTree = rootRoute.addChildren({
         "/",
         "/admin",
         "/login",
-        "/register"
+        "/products",
+        "/register",
+        "/reviews"
       ]
     },
     "/": {
@@ -105,8 +135,14 @@ export const routeTree = rootRoute.addChildren({
     "/login": {
       "filePath": "login.tsx"
     },
+    "/products": {
+      "filePath": "products.tsx"
+    },
     "/register": {
       "filePath": "register.tsx"
+    },
+    "/reviews": {
+      "filePath": "reviews.tsx"
     }
   }
 }
