@@ -24,7 +24,7 @@ export const queryClient = new QueryClient();
 export const Route = createRootRoute({
   component: () => {
     return (
-      <>
+      <div className="mb-10">
         <QueryClientProvider client={queryClient}>
           <div className="flex w-full flex-col mb-2">
             <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
@@ -62,7 +62,7 @@ export const Route = createRootRoute({
           <TanStackRouterDevtools />
         </QueryClientProvider>
         <Toaster richColors />
-      </>
+      </div>
     );
   },
 });
@@ -82,6 +82,12 @@ const Navigation = () => {
       <Link to="/" className="[&.active]:font-bold">
         Home
       </Link>{" "}
+      <Link to="/reviews">Reviews</Link>
+      {/* {user?.role === "user" && (
+        <Link to="/products" className="[&.active]:font-bold">
+          Products
+        </Link>
+      )}{" "} */}
       {user?.role === "admin" && (
         <Link to="/admin" className="[&.active]:font-bold">
           Admin
