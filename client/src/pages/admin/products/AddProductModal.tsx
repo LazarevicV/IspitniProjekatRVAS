@@ -109,9 +109,9 @@ const AddProductModal: React.FC<{
     });
 
     toast.promise(mutate, {
-      loading: "Updating...",
-      success: "Product updated",
-      error: "Failed to update product",
+      loading: "Adding...",
+      success: "Product created successfully",
+      error: "Failed to create product",
     });
   };
 
@@ -122,23 +122,19 @@ const AddProductModal: React.FC<{
           <h3>Add Product</h3>
           <DialogDescription>
             <div className="flex flex-col gap-4 mt-10">
-              <Label>
-                Title
-                <Input
-                  onChange={handleTitleChange}
-                  type="text"
-                  value={createdProduct.title}
-                />
-              </Label>
-              <Label>
-                Price
-                <Input
-                  onChange={handlePriceChange}
-                  type="number"
-                  step="0.01"
-                  value={createdProduct.price}
-                />
-              </Label>
+              <Label>Title</Label>
+              <Input
+                onChange={handleTitleChange}
+                type="text"
+                value={createdProduct.title}
+              />
+              <Label>Price</Label>
+              <Input
+                onChange={handlePriceChange}
+                type="number"
+                step="0.01"
+                value={createdProduct.price}
+              />
               <div className="flex items-center gap-10">
                 Category
                 <Select
@@ -160,14 +156,12 @@ const AddProductModal: React.FC<{
                   </SelectContent>
                 </Select>
               </div>
-              <Label>
-                Description
-                <Textarea
-                  value={createdProduct.description}
-                  onChange={handleDescriptionChange}
-                  className="h-[250px]"
-                />
-              </Label>
+              <Label>Description</Label>
+              <Textarea
+                value={createdProduct.description}
+                onChange={handleDescriptionChange}
+                className="h-[250px]"
+              />
               <Label>
                 Image
                 <Input onChange={handleFileChange} type="file" />

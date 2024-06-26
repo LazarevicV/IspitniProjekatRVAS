@@ -45,14 +45,12 @@ const AddCategoriesModal: React.FC<{
         <DialogHeader>
           <h3>Add Category</h3>
           <div className="flex flex-col gap-4 mt-10">
-            <Label>
-              Title
-              <Input
-                onChange={handleTitleChange}
-                type="text"
-                value={categoryTitle}
-              />
-            </Label>
+            <Label>Title</Label>
+            <Input
+              onChange={handleTitleChange}
+              type="text"
+              value={categoryTitle}
+            />
             <Button onClick={handleCreateCategory}>Create</Button>
           </div>
         </DialogHeader>

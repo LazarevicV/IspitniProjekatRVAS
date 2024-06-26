@@ -3,7 +3,7 @@ import React from "react";
 import { cn } from "@/lib/utils";
 import { ProductsTab } from "./products/ProductsTab";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { OrdersTab } from "./orders/OrdersTab";
+import { OrdersTab, UsersTab } from "./users/UsersTab";
 import { CategoriesTab } from "./categories/CategoriesTab";
 // import { SchoolsTab } from "./schools/SchoolsTab";
 
@@ -14,7 +14,7 @@ const AdminPage: React.FC<{ className?: string }> = ({ className }) => {
         <TabsList>
           <TabsTrigger value="products">Products</TabsTrigger>
           <TabsTrigger value="categories">Categories</TabsTrigger>
-          <TabsTrigger value="orders">Orders</TabsTrigger>
+          <TabsTrigger value="users">Users</TabsTrigger>
         </TabsList>
         <TabsContent value="products">
           <ProductsTab />
@@ -22,8 +22,8 @@ const AdminPage: React.FC<{ className?: string }> = ({ className }) => {
         <TabsContent value="categories">
           <CategoriesTab />
         </TabsContent>
-        <TabsContent value="orders">
-          <OrdersTab />
+        <TabsContent value="users">
+          <UsersTab />
         </TabsContent>
       </Tabs>
     </div>
