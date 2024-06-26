@@ -25,11 +25,34 @@ namespace IspitniProjekatRVAS.Controllers
             return Ok(products);
         }
 
-        // GET api/<ProductsController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("pagination")]
+        public async Task<IActionResult> GetProducts([FromQuery] int page = 1, [FromQuery] int pageSize = 4)
         {
-            return "value";
+            var (products, totalCount) = await _productService.GetProductsAsync(page, pageSize);
+
+            var result = new
+            {
+                Products = products,
+                TotalCount = totalCount,
+                Page = page,
+                PageSize = pageSize
+            };
+
+            return Ok(result);
+        }
+
+        // GET: api/products/search?name={name}
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<Product>>> SearchProductsByName(string name)
+        {
+            var products = await _productService.SearchProductsByNameAsync(name);
+
+            if (products == null || !products.Any())
+            {
+                return NotFound("No products found.");
+            }
+
+            return Ok(products);
         }
 
         [HttpPost]
@@ -113,6 +136,36 @@ namespace IspitniProjekatRVAS.Controllers
             await _productService.UpdateProductAsync(product);
 
             return Ok();
+        }
+
+        [HttpGet("byCategory")]
+        public async Task<IActionResult> GetProductsByCategory([FromQuery] int categoryId, [FromQuery] int page = 1, [FromQuery] int pageSize = 4)
+        {
+            var products = await _productService.GetProductsByCategoryAsync(categoryId);
+            if (products == null || !products.Any())
+            {
+                // Fall back to paginated product list
+                var (paginatedProducts, totalCount) = await _productService.GetProductsAsync(page, pageSize);
+                var result = new
+                {
+                    Products = new Product[0],
+                    TotalCount = totalCount,
+                    Page = page,
+                    PageSize = pageSize,
+                };
+                return Ok(result);
+            }
+
+            // Return products by category
+            var response = new
+            {
+                Products = products,
+                TotalCount = products.Count,
+                Page = page,
+                PageSize = pageSize
+            };
+
+            return Ok(response);
         }
 
         // DELETE api/products/5
